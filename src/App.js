@@ -1,29 +1,44 @@
 import React from "react";
 //import logo from "./logo.svg";
 import "./App.css";
-import store from "./store";
+//import store from "./store";
 import update_person from "./store/actions/personAction";
 import update_game from "./store/actions/gameAction";
+import { connect } from "react-redux";
 
-const updatePerson = () => {
-  store.dispatch(update_person);
-};
-
-const updateGame = () => {
-  store.dispatch(update_game);
-};
-function App() {
+function App(props) {
   return (
     <div className="App">
       <h1>Redux tutorial</h1>
-      Person Name : {store.getState().person.name}
-      <button onClick={updatePerson}>Update Person</button>
+      Person Name : {props.person.name}
+      <button onClick={props.updatePerson}>Update Person</button>
       <br />
-      Game Name : {store.getState().game.name}
-      <button onClick={updateGame}>Update Game</button>
+      Game Name : {props.game.name}
+      <button onClick={props.updateGame}>Update Game</button>
       <br />
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    game: state.game,
+    person: state.person
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updatePerson: () => {
+      dispatch(update_person);
+    },
+    updateGame: () => {
+      dispatch(update_game);
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

@@ -1,3 +1,5 @@
-const update_game = { type: "update_game", payload: "Cricket" };
+export const UPDATE_GAME = "update_game";
+
+const update_game = { type: UPDATE_GAME, payload: "Cricket" };
 
 export default update_game;

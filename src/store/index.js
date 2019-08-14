@@ -1,21 +1,31 @@
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import gameReducer from "./reducers/gameReducer";
 import personReducer from "./reducers/personReducer";
+import userReducer from "./reducers/userReducer";
+import thunk from "redux-thunk";
 //import update_person from "./actions/personAction";
 
 const Allreducer = combineReducers({
   game: gameReducer,
-  person: personReducer
+  person: personReducer,
+  users: userReducer
 });
 
 const initialState = {
   game: { name: "Fifa" },
-  person: { name: "sarthak" }
+  person: { name: "sarthak", email: "sarthak@gmil.com" },
+  users: []
 };
+
+const middleware = [thunk];
+
 const store = createStore(
   Allreducer,
   initialState,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  compose(
+    applyMiddleware(...middleware),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  )
 );
 
 //console.log(store.getState());
@@ -24,5 +34,5 @@ const store = createStore(
 //store.dispatch({ type: "update_game", payload: "smackdown" });
 
 //console.log(store.getState());
-
+//window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 export default store;
